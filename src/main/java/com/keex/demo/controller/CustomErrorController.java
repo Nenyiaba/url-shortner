@@ -3,6 +3,7 @@ package com.keex.demo.controller;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * This class contains the custom error page to be displayed as opposed to the general white label error.
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Keex
  *
  */
+@ApiIgnore
 @RestController
 public class CustomErrorController implements ErrorController {
 
