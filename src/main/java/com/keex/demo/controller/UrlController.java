@@ -25,7 +25,7 @@ import java.util.List;
 public class UrlController {
 
 	@Autowired
-	public UrlUtilityService urlUtilityService;
+	private UrlUtilityService urlUtilityService;
 
 
 	@GetMapping("")
@@ -33,7 +33,7 @@ public class UrlController {
 		return "Url Service Up and Running";
 	}
 
-
+	//Generating short url from long url
 	@PostMapping("/shorten")
 	public String shortnUrl(@RequestBody ShortnerRequest shortnerRequest){
 		return urlUtilityService.shorten(shortnerRequest.url);
@@ -45,6 +45,7 @@ public class UrlController {
 		return allMappings;
 	}
 
+	//Mapping the short url tio the long url using HTTP GET
 	@GetMapping("/fetch/{code}")
 	public ModelAndView redirect(@PathVariable("code") String code, HttpServletResponse resp) throws IOException {
 		String fullUrl = urlUtilityService.getFullUrl(code);
@@ -58,6 +59,7 @@ public class UrlController {
 		}
 	}
 
+	//Mapping the short url tio the long url using HTTP POST
 	@PostMapping("/fetch")
 	public ModelAndView redirectPost(@RequestBody ShortnerFetch shortnerFetch, HttpServletResponse resp) throws IOException {
 		String fullUrl = urlUtilityService.getFullUrl(shortnerFetch.urlCode);
@@ -82,15 +84,4 @@ public class UrlController {
 		int size = urlUtilityService.getAllMappings().size();
 		return "TOTAL NUMBER OF CURRENT MAPPINGS - "+String.valueOf(size);
 	}
-
-	/*
-	@PostMapping("/retrieve")
-	public ResponseEntity getFullUrl(@RequestBody Request request){
-		String returnedUrl = urlUtility.getFullUrl(request.urlCode);
-		if(returnedUrl == null){
-			return new ResponseEntity<String>("Unknown short url",HttpStatus.NOT_FOUND);
-		}
-		return new ResponseEntity(returnedUrl, HttpStatus.OK);
-	}
-	*/
 }

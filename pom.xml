@@ -29,10 +29,6 @@
 			<version>3.9</version>
 		</dependency>
 		<dependency>
-			<groupId>org.hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
@@ -77,18 +73,6 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<!--
-			<plugin>
-				<groupId>com.heroku.sdk</groupId>
-				<artifactId>heroku-maven-plugin</artifactId>
-				<version>2.0.16</version>
-				<configuration>
-					<processTypes>
-						<web>java -jar target/demo-0.0.1-SNAPSHOT.jar</web>
-					</processTypes>
-				</configuration>
-			</plugin>
-			-->
 		</plugins>
 	</build>
 

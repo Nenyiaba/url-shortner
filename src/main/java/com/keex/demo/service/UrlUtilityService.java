@@ -15,7 +15,7 @@ import java.util.List;
 public class UrlUtilityService {
 
 	@Autowired
-	UrlRepository urlRepository;
+	private UrlRepository urlRepository;
 
 	/**
 	 * Method for shortening urls.
@@ -24,10 +24,11 @@ public class UrlUtilityService {
 	 * @return string code representing the url.
 	 */
 	public String shorten(String url){
-		UrlMap foundUrl = urlRepository.findByValue(url);
+		UrlMap foundUrl = urlRepository.findByValue(url);//Checking if the url exists first
 		if(foundUrl != null){
-			return foundUrl.getKey();
+			return foundUrl.getKey();//Return corresponding short url if long url exists already
 		}
+		//Otherwise, generate new short url
 		String generatedUrl = generateShortUrl();
 		UrlMap newUrlMap = new UrlMap(generatedUrl, url);
 		urlRepository.save(newUrlMap);
@@ -36,6 +37,7 @@ public class UrlUtilityService {
 
 	/**
 	 * Method for increasing the count of visited urls.
+	 * Each time a short url is used to access a long url, the count is increased by 1.
 	 *
 	 * @param urlCode the url code to be used to find url record.
 	 * @return returns true if completed successfully.
@@ -60,7 +62,7 @@ public class UrlUtilityService {
 	 * @return List of top three most visited url mappings.
 	 */
 	public List<StatisticResponse> getTopMappings(){
-		List<UrlMap> allMappings = urlRepository.findTopMappings();
+		List<UrlMap> allMappings = urlRepository.findTopMappings();//Return a list of all mappings but sorted by descending count
 		List<StatisticResponse> mostVisited = new ArrayList<>();
 		int topThreeCounter = 0;
 		for(UrlMap map : allMappings){
@@ -86,9 +88,7 @@ public class UrlUtilityService {
 		int length = 8;
 		boolean useLetters = true;
 		boolean useNumbers = true;
-		String generatedString =  RandomStringUtils.random(length, useLetters, useNumbers);
-		return generatedString;
-		//return "www.short.ly/"+generatedString;
+		return RandomStringUtils.random(length, useLetters, useNumbers);
 	}
 
 	/**
